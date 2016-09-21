@@ -162,10 +162,12 @@ public class MeltedClient {
                 }
             }
             
-            try {
-                Thread.sleep(SLEEP_TIME_MS);
-            } catch (InterruptedException ex) { //TODO
-                ex.printStackTrace();
+            if(keepListening){
+                try {
+                    Thread.sleep(SLEEP_TIME_MS);
+                } catch (InterruptedException ex) { //TODO
+                    ex.printStackTrace();
+                }
             }
         }
         

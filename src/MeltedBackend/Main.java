@@ -43,7 +43,7 @@ public class Main {
                 else {
                     printPlaylist(playlist);
 
-                    simpleParser.parse( melted.send("PLAY U0") );
+                    melted.send("PLAY U0");
                     melted.send("CLEAN U0");
                     melted.send("APND U0 "+playlist[2]);
                     melted.send("APND U0 "+playlist[1]);
@@ -51,6 +51,7 @@ public class Main {
                     melted.send("STOP U0");
                     melted.send("REW U0");
 
+                    System.out.println("Invertí los últimos 2 videos.");
                     playlist = (  (ListResponse)listParser.parse(  melted.send("LIST U0")  )   ).getMeltedPlaylist();
                     printPlaylist(playlist);
                 }

@@ -22,9 +22,9 @@ public class Response {
     }
 
     /**
-     * Simlpe way of checking if the command was succesfull.
+     * Simlpe way of checking if the command was successful.
      *
-     * @return true if the command was OK false otherwise.
+     * @return true if the command was OK, false otherwise.
      */
     public boolean cmdOk(){
         return status.split(" ")[1] == "OK";
