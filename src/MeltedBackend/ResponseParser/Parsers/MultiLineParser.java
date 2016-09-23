@@ -19,14 +19,17 @@ public class MultiLineParser extends AbstractMeltedParser{
     public GenericResponse parse(String rawResponse) {
         String[] lines = rawResponse.split("\n");
         String status = lines[0];
-        ArrayList<String[]> data = new ArrayList<String[]>();
+        ArrayList<String[]> data = null;
         
-        for(int i=1; i< lines.length; i++){            
-            data.add(lines[i].split(" "));
+        if(status.split(" ")[1].equals(OK)){
+            data = new ArrayList<String[]>();
+
+            for(int i=1; i< lines.length; i++){            
+                data.add(lines[i].split(" "));
+            }
         }
 
         response.setData(status, null, data);
-        
         return response;
     }
 }

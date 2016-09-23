@@ -8,6 +8,7 @@ import MeltedBackend.ResponseParser.Responses.GenericResponse;
  * @author rombus
  */
 public abstract class AbstractMeltedParser implements MeltedParser{
+    protected static final String OK = "OK";
     protected GenericResponse response;
 
     public AbstractMeltedParser(GenericResponse response){

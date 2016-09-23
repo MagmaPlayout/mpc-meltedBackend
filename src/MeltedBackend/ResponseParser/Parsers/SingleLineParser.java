@@ -20,10 +20,8 @@ public class SingleLineParser extends AbstractMeltedParser{
         String status = lines[0];
         String[] singleData = null;
 
-        try{
+        if(status.split(" ")[1].equals(OK)){
             singleData = lines[1].split(" ");
-        } catch(ArrayIndexOutOfBoundsException e){
-            // Seguro el comando falló, por lo que no hay linea de datos
         }
 
         response.setData(status, singleData, null);
