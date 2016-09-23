@@ -8,12 +8,12 @@ import java.util.ArrayList;
  * 
  * @author rombus
  */
-public class Response {
+public class GenericResponse {
     public String status;           // Status string
     public String[] singleData;     // Array of data for commands with one line responses (aside from status line)
     public ArrayList<String[]> data;// ArrayList of data for commands with multi line responses (aside from status line)
 
-    public Response setData(String status, String[] singleData, ArrayList<String[]> data){
+    public GenericResponse setData(String status, String[] singleData, ArrayList<String[]> data){
         this.status = status;
         this.singleData = singleData;
         this.data = data;
@@ -27,6 +27,7 @@ public class Response {
      * @return true if the command was OK, false otherwise.
      */
     public boolean cmdOk(){
-        return status.split(" ")[1] == "OK";
+        System.out.println("comparar con "+status.split(" ")[1]);
+        return status.split(" ")[1].equals("OK");
     }
 }

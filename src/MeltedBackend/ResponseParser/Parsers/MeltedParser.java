@@ -1,6 +1,6 @@
 package MeltedBackend.ResponseParser.Parsers;
 
-import MeltedBackend.ResponseParser.Responses.Response;
+import MeltedBackend.ResponseParser.Responses.GenericResponse;
 
 /**
  * Simple parsers interface.
@@ -8,5 +8,5 @@ import MeltedBackend.ResponseParser.Responses.Response;
  * @author rombus
  */
 public interface MeltedParser {
-    public Response parse(String rawResponse);
+    public GenericResponse parse(String rawResponse);
 }

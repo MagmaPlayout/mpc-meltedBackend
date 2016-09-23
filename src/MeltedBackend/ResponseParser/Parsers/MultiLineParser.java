@@ -1,6 +1,6 @@
 package MeltedBackend.ResponseParser.Parsers;
 
-import MeltedBackend.ResponseParser.Responses.Response;
+import MeltedBackend.ResponseParser.Responses.GenericResponse;
 import java.util.ArrayList;
 
 /**
@@ -11,12 +11,12 @@ import java.util.ArrayList;
  */
 public class MultiLineParser extends AbstractMeltedParser{
 
-    public MultiLineParser(Response response) {
+    public MultiLineParser(GenericResponse response) {
         super(response);
     }
     
     @Override
-    public Response parse(String rawResponse) {
+    public GenericResponse parse(String rawResponse) {
         String[] lines = rawResponse.split("\n");
         String status = lines[0];
         ArrayList<String[]> data = new ArrayList<String[]>();

@@ -7,7 +7,7 @@ package MeltedBackend;
  *
  * @author rombus
  */
-public class MeltedResponse {
+public class MeltedResponseWriter {
     private String response = "";
     private boolean active = false; // If this response object is being written to
     

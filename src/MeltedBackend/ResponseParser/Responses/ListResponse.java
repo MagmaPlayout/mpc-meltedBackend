@@ -6,7 +6,7 @@ package MeltedBackend.ResponseParser.Responses;
  * 
  * @author rombus
  */
-public class ListResponse extends Response{
+public class ListResponse extends GenericResponse{
     public static final short PLAYLIST_MODIFICATIONS = 0;
     public static final short CLIP_PATH = 1;
 

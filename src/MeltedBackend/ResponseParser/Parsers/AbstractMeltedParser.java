@@ -1,6 +1,6 @@
 package MeltedBackend.ResponseParser.Parsers;
 
-import MeltedBackend.ResponseParser.Responses.Response;
+import MeltedBackend.ResponseParser.Responses.GenericResponse;
 
 /**
  * This class is to enforce that each parser has it's own Response object.
@@ -8,9 +8,9 @@ import MeltedBackend.ResponseParser.Responses.Response;
  * @author rombus
  */
 public abstract class AbstractMeltedParser implements MeltedParser{
-    protected Response response;
+    protected GenericResponse response;
 
-    public AbstractMeltedParser(Response response){
+    public AbstractMeltedParser(GenericResponse response){
         this.response = response;
     }
 }

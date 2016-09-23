@@ -1,11 +1,12 @@
 package MeltedBackend;
 
+import MeltedBackend.Commands.MeltedCmdFactory;
 import MeltedBackend.ResponseParser.Parsers.MeltedParser;
 import MeltedBackend.ResponseParser.Parsers.MultiLineParser;
 import MeltedBackend.ResponseParser.Parsers.SingleLineParser;
 import MeltedBackend.ResponseParser.Parsers.StatusParser;
+import MeltedBackend.ResponseParser.Responses.GenericResponse;
 import MeltedBackend.ResponseParser.Responses.ListResponse;
-import MeltedBackend.ResponseParser.Responses.Response;
 import MeltedBackend.ResponseParser.Responses.UstaResponse;
 
 /**
@@ -15,13 +16,15 @@ import MeltedBackend.ResponseParser.Responses.UstaResponse;
  */
 public class Main {
     private static final boolean TEST_PARSERS = true;
+    private static final boolean TEST_COMMANDS = true;
+    private static final String U0 = "U0";
 
     public static void main(String[] args) {
         new Main();
     }
     
     public Main(){
-        MeltedClient melted = new MeltedClient();
+        MeltedTelnetClient melted = new MeltedTelnetClient();
         
         if(connect(melted)){
             if(!TEST_PARSERS){
@@ -31,8 +34,8 @@ public class Main {
                 System.out.println("----- PLAY U0\n"+melted.send("PLAY U0", 120));
                 System.out.println("----- STOP U0\n"+melted.send("STOP U0", 70));
             }
-            else {
-                MeltedParser simpleParser = new StatusParser(new Response());
+            else if(!TEST_COMMANDS){
+                MeltedParser simpleParser = new StatusParser(new GenericResponse());
                 MeltedParser ustaParser = new SingleLineParser(new UstaResponse());
                 MeltedParser listParser = new MultiLineParser(new ListResponse());
 
@@ -56,6 +59,11 @@ public class Main {
                     printPlaylist(playlist);
                 }
             }
+            else {
+                MeltedCmdFactory cf = new MeltedCmdFactory(melted);
+                System.out.println(((UstaResponse)cf.getNewUstaCmd(U0).exec()).getPlayingClipPath());
+                System.out.println(cf.getNewPlayCmd(U0).exec().cmdOk());
+            }
             
             disconnect(melted);
         }
@@ -67,18 +75,21 @@ public class Main {
     }
     
 
-    private boolean connect(MeltedClient melted){
-        boolean connected = melted.connect("localhost", 5250, 120);
+    private boolean connect(MeltedTelnetClient melted){
+        boolean connected = melted.connect("localhost", 5250, 320);
 
         if(connected == false){
             System.out.println("Fail connecting to melted server!!!");
             connected = melted.reconnect(3, 2000);
         }
+        else {
+            System.out.println("Connected to melted!");
+        }
         
         return connected;
     }
 
-    private void disconnect(MeltedClient melted){
+    private void disconnect(MeltedTelnetClient melted){
         try {
             melted.disconnect();
             melted.getListenerThread().join();

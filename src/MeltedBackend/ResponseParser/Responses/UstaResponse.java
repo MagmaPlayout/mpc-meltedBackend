@@ -6,7 +6,7 @@ package MeltedBackend.ResponseParser.Responses;
  *
  * @author rombus
  */
-public class UstaResponse extends Response{    
+public class UstaResponse extends GenericResponse{    
     public static final short MODE = 1;
     public static final short CUR_CLIP_PATH = 2;
     public static final short CUR_CLIP_INDEX = 16;
@@ -26,7 +26,12 @@ public class UstaResponse extends Response{
     }
 
     public String getPlayingClipPath(){
-        return this.singleData[CUR_CLIP_PATH];
+        try{
+            return this.singleData[CUR_CLIP_PATH];
+        }catch(NullPointerException e){
+            // No está cargada la línea de datos
+            return "-1";
+        }
     }
 
     public String getUnitStatus(){

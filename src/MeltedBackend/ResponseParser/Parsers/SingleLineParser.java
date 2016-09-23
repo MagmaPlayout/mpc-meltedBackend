@@ -1,6 +1,6 @@
 package MeltedBackend.ResponseParser.Parsers;
 
-import MeltedBackend.ResponseParser.Responses.Response;
+import MeltedBackend.ResponseParser.Responses.GenericResponse;
 
 /**
  * Parser for melted commands with one line response (aside from status line)
@@ -10,15 +10,21 @@ import MeltedBackend.ResponseParser.Responses.Response;
  */
 public class SingleLineParser extends AbstractMeltedParser{
 
-    public SingleLineParser(Response response) {
+    public SingleLineParser(GenericResponse response) {
         super(response);
     }
 
     @Override
-    public Response parse(String rawResponse) {
+    public GenericResponse parse(String rawResponse) {
         String[] lines = rawResponse.split("\n");
-        String[] singleData = lines[1].split(" ");
         String status = lines[0];
+        String[] singleData = null;
+
+        try{
+            singleData = lines[1].split(" ");
+        } catch(ArrayIndexOutOfBoundsException e){
+            // Seguro el comando falló, por lo que no hay linea de datos
+        }
 
         response.setData(status, singleData, null);
         return response;

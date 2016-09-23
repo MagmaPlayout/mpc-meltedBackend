@@ -9,10 +9,10 @@ import java.io.IOException;
  * @author rombus
  */
 public class MeltedListener implements Runnable {
-    private final MeltedResponse response;
+    private final MeltedResponseWriter response;
     private final BufferedReader reader;
     
-    public MeltedListener(MeltedResponse response, BufferedReader reader){
+    public MeltedListener(MeltedResponseWriter response, BufferedReader reader){
         this.response = response;
         this.reader = reader;
     }

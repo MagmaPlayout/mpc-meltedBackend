@@ -1,6 +1,6 @@
 package MeltedBackend.ResponseParser.Parsers;
 
-import MeltedBackend.ResponseParser.Responses.Response;
+import MeltedBackend.ResponseParser.Responses.GenericResponse;
 
 /**
  * Simple parser for melted commands with only a status line response
@@ -10,12 +10,12 @@ import MeltedBackend.ResponseParser.Responses.Response;
  */
 public class StatusParser extends AbstractMeltedParser {
 
-    public StatusParser(Response response) {
+    public StatusParser(GenericResponse response) {
         super(response);
     }
     
     @Override
-    public synchronized Response parse(String rawResponse){
+    public synchronized GenericResponse parse(String rawResponse){
         String[] lines = rawResponse.split("\n");
         response.setData(lines[0], null, null);
         
