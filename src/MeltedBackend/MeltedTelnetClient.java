@@ -1,5 +1,6 @@
 package MeltedBackend;
 
+import MeltedBackend.Common.MeltedCommandException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -136,24 +137,23 @@ public class MeltedTelnetClient implements MeltedClient {
      * @param cmd melted command
      * @param timeout command timeout in ms
      * @return melted response
+     * @throws MeltedBackend.Common.MeltedCommandException     
      */
-    public synchronized String send(String cmd, long timeout){
+    @Override
+    public synchronized String send(String cmd, long timeout) throws MeltedCommandException{
         response.resetResponse();   // Clean response
         writer.println(cmd);        // Send telnet command
-        System.out.println("-> "+cmd);
 
         timeout = TimeUnit.NANOSECONDS.convert(timeout, TimeUnit.MILLISECONDS); // Convert to nanoseconds
 
         // Grab response...
-        boolean keepListening = true;
         long inactiveTime, lastActiveTime = System.nanoTime();
         
         while(!response.completed()){
             inactiveTime = System.nanoTime() - lastActiveTime;
             
             if(inactiveTime >= timeout){
-                System.out.println("Timed out "+inactiveTime+", "+timeout);
-                return "-1";    // Timedout
+               throw new MeltedCommandException("Command `"+cmd+"` timed out.  "+inactiveTime+"ns inactive.");
             }
             
             try {
@@ -171,8 +171,10 @@ public class MeltedTelnetClient implements MeltedClient {
      *
      * @param cmd melted command
      * @return melted response
+     * @throws MeltedBackend.Common.MeltedCommandException     
      */
-    public String send(String cmd){
+    @Override
+    public String send(String cmd) throws MeltedCommandException{
         return send(cmd,timeout);
     }
 

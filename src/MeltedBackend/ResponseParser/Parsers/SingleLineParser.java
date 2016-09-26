@@ -20,7 +20,7 @@ public class SingleLineParser extends AbstractMeltedParser{
         String status = lines[0];
         String[] singleData = null;
 
-        if(!status.equals("-1") && status.split(" ")[1].equals(OK)){
+        if(status.split(" ")[1].equals(OK)){
             singleData = lines[1].split(" ");
         }
 

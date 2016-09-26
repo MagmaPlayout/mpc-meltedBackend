@@ -22,7 +22,7 @@ public class MultiLineParser extends AbstractMeltedParser{
         ArrayList<String[]> data = null;
         
         if(status.split(" ")[1].equals(OK)){
-            data = new ArrayList<String[]>();
+            data = new ArrayList<>();
 
             for(int i=1; i< lines.length; i++){            
                 data.add(lines[i].split(" "));

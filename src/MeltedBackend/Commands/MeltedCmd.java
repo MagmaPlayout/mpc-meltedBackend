@@ -1,5 +1,6 @@
 package MeltedBackend.Commands;
 
+import MeltedBackend.Common.MeltedCommandException;
 import MeltedBackend.MeltedClient;
 import MeltedBackend.ResponseParser.Parsers.MeltedParser;
 import MeltedBackend.ResponseParser.Responses.GenericResponse;
@@ -10,9 +11,9 @@ import MeltedBackend.ResponseParser.Responses.GenericResponse;
  * @author rombus
  */
 public class MeltedCmd {
-    private MeltedClient melted;
+    private final MeltedClient melted;
+    private final MeltedParser parser;
     private String command;
-    private MeltedParser parser;
 
     public MeltedCmd(String cmd, String unit, String args, MeltedClient melted, MeltedParser parser){
         this.parser = parser;
@@ -20,11 +21,11 @@ public class MeltedCmd {
 
         command = cmd+" "+unit;        
         if(!args.isEmpty()){
-            command.concat(" "+args);
+            command = command.concat(" "+args);
         }
     }
 
-    public GenericResponse exec(){
+    public GenericResponse exec() throws MeltedCommandException{
         return parser.parse(melted.send(command));
     }
 }

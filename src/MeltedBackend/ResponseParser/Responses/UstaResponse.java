@@ -1,5 +1,7 @@
 package MeltedBackend.ResponseParser.Responses;
 
+import MeltedBackend.Common.MeltedCommandException;
+
 /**
  * Response class for storing Melted's "USTA {UNIT}" command responses.
  * Use this class with SingleLineParser.
@@ -13,43 +15,48 @@ public class UstaResponse extends GenericResponse{
     public static final short CUR_CLIP_LEN = 8;
     public static final short CUR_CLIP_FRAME = 3;
     
-    public int getPlayingClipIndex(){
+    public int getPlayingClipIndex() throws MeltedCommandException{
         try{
             return Integer.parseInt(this.singleData[CUR_CLIP_INDEX]);
-        }catch(NullPointerException e){
-            // No está cargada la línea de datos
-            return -1;
+        }
+        catch(NullPointerException e) {
+            throw new MeltedCommandException("`UstaResponse` - Cannot get data at index "+CUR_CLIP_INDEX+".");
         }
     }
 
-    public int getPlayingClipLength(){
+    public int getPlayingClipLength() throws MeltedCommandException{
         try{
-            return Integer.parseInt(this.singleData[CUR_CLIP_LEN]);
-        }catch(NullPointerException e){
-            // No está cargada la línea de datos
-            return -1;
+            return Integer.parseInt(this.singleData[CUR_CLIP_LEN]);    
+        }
+        catch(NullPointerException e) {
+            throw new MeltedCommandException("`UstaResponse` - Cannot get data at index "+CUR_CLIP_LEN+".");
         }
     }
 
-    public int getPlayingClipFrame(){
+    public int getPlayingClipFrame() throws MeltedCommandException{
         try{
             return Integer.parseInt(this.singleData[CUR_CLIP_FRAME]);
-        }catch(NullPointerException e){
-            // No está cargada la línea de datos
-            return -1;
+        }
+        catch(NullPointerException e) {
+            throw new MeltedCommandException("`UstaResponse` - Cannot get data at index "+CUR_CLIP_FRAME+".");
         }
     }
 
-    public String getPlayingClipPath(){
+    public String getPlayingClipPath() throws MeltedCommandException{
         try{
             return this.singleData[CUR_CLIP_PATH];
-        }catch(NullPointerException e){
-            // No está cargada la línea de datos
-            return " --- ";
+        }
+        catch(NullPointerException e) {
+            throw new MeltedCommandException("`UstaResponse` - Cannot get data at index "+CUR_CLIP_PATH+".");
         }
     }
 
-    public String getUnitStatus(){
-        return this.singleData[MODE];
+    public String getUnitStatus() throws MeltedCommandException{
+        try{
+            return this.singleData[MODE];
+        }
+        catch(NullPointerException e) {
+            throw new MeltedCommandException("`UstaResponse` - Cannot get data at index "+MODE+".");    
+        }        
     }
 }

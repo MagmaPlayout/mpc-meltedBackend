@@ -1,5 +1,6 @@
 package MeltedBackend;
 
+import MeltedBackend.Common.MeltedCommandException;
 import MeltedBackend.Commands.MeltedCmdFactory;
 import MeltedBackend.ResponseParser.Parsers.MeltedParser;
 import MeltedBackend.ResponseParser.Parsers.MultiLineParser;
@@ -29,40 +30,60 @@ public class Main {
         if(connect(melted)){
             if(!TEST_PARSERS){
                 // Uso de MeltedBackend sin Parsers, imprimen los strings pelados, como vienen.
-                System.out.println("----- USTA U0\n"+melted.send("USTA U0"));
-                System.out.println("----- LIST U0\n"+melted.send("LIST U0", 30));
-                System.out.println("----- PLAY U0\n"+melted.send("PLAY U0", 120));
-                System.out.println("----- STOP U0\n"+melted.send("STOP U0", 70));
+                try{
+                    System.out.println("----- USTA U0\n"+melted.send("USTA U0"));
+                    System.out.println("----- LIST U0\n"+melted.send("LIST U0", 30));
+                    System.out.println("----- PLAY U0\n"+melted.send("PLAY U0", 120));
+                    System.out.println("----- STOP U0\n"+melted.send("STOP U0", 70));
+                }
+                catch(MeltedCommandException e){
+                    e.printStackTrace();
+                }
             }
             else if(!TEST_COMMANDS){
                 MeltedParser simpleParser = new StatusParser(new GenericResponse());
                 MeltedParser ustaParser = new SingleLineParser(new UstaResponse());
                 MeltedParser listParser = new MultiLineParser(new ListResponse());
 
-                String[] playlist = (  (ListResponse)listParser.parse(  melted.send("LIST U0")  )   ).getMeltedPlaylist();
+                String[] playlist = null;
+                try{
+                    playlist = (  (ListResponse)listParser.parse(  melted.send("LIST U0")  )   ).getMeltedPlaylist();                }
+                catch(MeltedCommandException e){
+                    e.printStackTrace();                    
+                }
+                
                 if(playlist.length < 3){
                     System.out.println("Cargá 3 videos DISTINTOS a melted!!!");
                 }
                 else {
                     printPlaylist(playlist);
+                    try{
+                        melted.send("PLAY U0");
+                        melted.send("CLEAN U0");
+                        melted.send("APND U0 "+playlist[2]);
+                        melted.send("APND U0 "+playlist[1]);
+                        System.out.println("Reproduciendo: "+((UstaResponse) ustaParser.parse(melted.send("USTA U0"))  ).getPlayingClipPath());
+                        melted.send("STOP U0");
+                        melted.send("REW U0");
 
-                    melted.send("PLAY U0");
-                    melted.send("CLEAN U0");
-                    melted.send("APND U0 "+playlist[2]);
-                    melted.send("APND U0 "+playlist[1]);
-                    System.out.println("Reproduciendo: "+((UstaResponse) ustaParser.parse(melted.send("USTA U0"))  ).getPlayingClipPath());
-                    melted.send("STOP U0");
-                    melted.send("REW U0");
-
-                    System.out.println("Invertí los últimos 2 videos.");
-                    playlist = (  (ListResponse)listParser.parse(  melted.send("LIST U0")  )   ).getMeltedPlaylist();
-                    printPlaylist(playlist);
+                        System.out.println("Invertí los últimos 2 videos.");
+                        playlist = (  (ListResponse)listParser.parse(  melted.send("LIST U0")  )   ).getMeltedPlaylist();
+                        printPlaylist(playlist);
+                    }
+                    catch(MeltedCommandException e){
+                        e.printStackTrace();
+                    }
                 }
             }
             else {
                 MeltedCmdFactory cf = new MeltedCmdFactory(melted);
-                System.out.println(((UstaResponse)cf.getNewUstaCmd(U0).exec()).getPlayingClipPath());
-                System.out.println(cf.getNewPlayCmd(U0).exec().cmdOk());
+                try{
+                    System.out.println(((UstaResponse)cf.getNewUstaCmd(U0).exec()).getPlayingClipPath());
+                    System.out.println(cf.getNewPlayCmd(U0).exec().cmdOk());
+                }
+                catch(MeltedCommandException e){
+                    e.printStackTrace();
+                }
             }
             
             disconnect(melted);

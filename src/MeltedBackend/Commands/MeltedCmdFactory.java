@@ -16,7 +16,7 @@ import MeltedBackend.ResponseParser.Responses.UstaResponse;
  * @author rombus
  */
 public class MeltedCmdFactory {
-    private MeltedClient melted;
+    private final MeltedClient melted;
     private final MeltedParser simpleParser = new StatusParser(new GenericResponse());
     private final MeltedParser ustaParser = new SingleLineParser(new UstaResponse());
     private final MeltedParser listParser = new MultiLineParser(new ListResponse());

@@ -27,8 +27,6 @@ public class GenericResponse {
      * @return true if the command was OK, false otherwise.
      */
     public boolean cmdOk(){
-        if(!status.equals("-1"))
-            return status.split(" ")[1].equals("OK");
-        return false;
+        return status.split(" ")[1].equals("OK");
     }
 }
