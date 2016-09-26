@@ -1,5 +1,6 @@
 package MeltedBackend;
 
+import MeltedBackend.TelnetClient.MeltedTelnetClient;
 import MeltedBackend.Common.MeltedCommandException;
 import MeltedBackend.Commands.MeltedCmdFactory;
 import MeltedBackend.ResponseParser.Parsers.MeltedParser;

@@ -1,5 +1,7 @@
 package MeltedBackend.ResponseParser.Responses;
 
+import MeltedBackend.Common.MeltedCommandException;
+
 /**
  * Response class for storing Melted's "LIST {UNIT}" command responses.
  * Use this class with MultiLineParser.
@@ -10,13 +12,18 @@ public class ListResponse extends GenericResponse{
     public static final short PLAYLIST_MODIFICATIONS = 0;
     public static final short CLIP_PATH = 1;
 
-    public String getListModifications(){
-        return this.data.get(PLAYLIST_MODIFICATIONS)[0];
+    public String getListModifications() throws MeltedCommandException{
+        try{
+            return this.data.get(PLAYLIST_MODIFICATIONS)[0];
+        }
+        catch(Exception e){
+            throw new MeltedCommandException("`ListResponse` - Cannot get data at row "+PLAYLIST_MODIFICATIONS+".");
+        }
     }
 
-    public String[] getMeltedPlaylist(){
-        if(this.data.size() == 0){
-            return new String[1];
+    public String[] getMeltedPlaylist() throws MeltedCommandException{
+        if(this.data.isEmpty()){
+            throw new MeltedCommandException("`ListResponse` - Cannot get data at index "+CLIP_PATH+".");
         }
 
         String[] paths = new String[this.data.size()-1]; // -1 for ignoring the first line of the response

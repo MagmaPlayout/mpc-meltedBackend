@@ -1,5 +1,6 @@
 package MeltedBackend.ResponseParser.Responses;
 
+import MeltedBackend.Common.MeltedCommandException;
 import java.util.ArrayList;
 
 /**
@@ -25,8 +26,14 @@ public class GenericResponse {
      * Simlpe way of checking if the command was successful.
      *
      * @return true if the command was OK, false otherwise.
+     * @throws MeltedBackend.Common.MeltedCommandException
      */
-    public boolean cmdOk(){
-        return status.split(" ")[1].equals("OK");
+    public boolean cmdOk() throws MeltedCommandException{
+        try{
+            return status.split(" ")[1].equals("OK");
+        }
+        catch(Exception e){
+            throw new MeltedCommandException("`GenericResponse` - Cannot get status data.");
+        }
     }
 }
