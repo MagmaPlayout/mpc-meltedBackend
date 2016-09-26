@@ -5,6 +5,7 @@ import MeltedBackend.ResponseParser.Parsers.MeltedParser;
 import MeltedBackend.ResponseParser.Parsers.MultiLineParser;
 import MeltedBackend.ResponseParser.Parsers.SingleLineParser;
 import MeltedBackend.ResponseParser.Parsers.StatusParser;
+import MeltedBackend.ResponseParser.Responses.ClsResponse;
 import MeltedBackend.ResponseParser.Responses.GenericResponse;
 import MeltedBackend.ResponseParser.Responses.ListResponse;
 import MeltedBackend.ResponseParser.Responses.UstaResponse;
@@ -20,29 +21,35 @@ public class MeltedCmdFactory {
     private final MeltedParser simpleParser = new StatusParser(new GenericResponse());
     private final MeltedParser ustaParser = new SingleLineParser(new UstaResponse());
     private final MeltedParser listParser = new MultiLineParser(new ListResponse());
-
+    private final MeltedParser clsParser = new MultiLineParser(new ClsResponse());
 
     public MeltedCmdFactory(MeltedClient melted){
         this.melted = melted;
     }
 
+    // Unit Commands -----------------------------------------------------------
     public MeltedCmd getNewUstaCmd(String unit){
-        return new MeltedCmd("USTA", unit, "", melted, ustaParser);
+        return new MeltedCmd(false, "USTA", unit, "", melted, ustaParser);
     }
 
     public MeltedCmd getNewListCmd(String unit){
-        return new MeltedCmd("LIST", unit, "", melted, listParser);
+        return new MeltedCmd(false, "LIST", unit, "", melted, listParser);
     }
 
     public MeltedCmd getNewPlayCmd(String unit){
-        return new MeltedCmd("PLAY", unit, "", melted, simpleParser);
+        return new MeltedCmd(false, "PLAY", unit, "", melted, simpleParser);
     }
     
     public MeltedCmd getNewStopCmd(String unit){
-        return new MeltedCmd("STOP", unit, "", melted, simpleParser);
+        return new MeltedCmd(false, "STOP", unit, "", melted, simpleParser);
     }
 
     public MeltedCmd getNewPauseCmd(String unit){
-        return new MeltedCmd("PAUSE", unit, "", melted, simpleParser);
+        return new MeltedCmd(false, "PAUSE", unit, "", melted, simpleParser);
+    }
+    
+    // Global Commands ---------------------------------------------------------
+    public MeltedCmd getNewClsCmd(String path){
+        return new MeltedCmd(true, "CLS", "", path, melted, clsParser);
     }
 }
