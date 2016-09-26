@@ -1,7 +1,7 @@
 package MeltedBackend.Commands;
 
 import MeltedBackend.Common.MeltedCommandException;
-import MeltedBackend.MeltedClient;
+import MeltedBackend.Common.MeltedClient;
 import MeltedBackend.ResponseParser.Parsers.MeltedParser;
 import MeltedBackend.ResponseParser.Responses.GenericResponse;
 

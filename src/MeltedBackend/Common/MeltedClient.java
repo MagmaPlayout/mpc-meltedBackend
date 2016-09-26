@@ -1,4 +1,4 @@
-package MeltedBackend;
+package MeltedBackend.Common;
 
 import MeltedBackend.Common.MeltedCommandException;
 

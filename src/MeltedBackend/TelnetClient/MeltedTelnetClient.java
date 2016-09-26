@@ -1,7 +1,7 @@
 package MeltedBackend.TelnetClient;
 
 import MeltedBackend.Common.MeltedCommandException;
-import MeltedBackend.MeltedClient;
+import MeltedBackend.Common.MeltedClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

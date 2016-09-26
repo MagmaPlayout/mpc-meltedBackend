@@ -1,6 +1,6 @@
 package MeltedBackend.Commands;
 
-import MeltedBackend.MeltedClient;
+import MeltedBackend.Common.MeltedClient;
 import MeltedBackend.ResponseParser.Parsers.MeltedParser;
 import MeltedBackend.ResponseParser.Parsers.MultiLineParser;
 import MeltedBackend.ResponseParser.Parsers.SingleLineParser;
