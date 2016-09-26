@@ -76,7 +76,7 @@ public class Main {
     
 
     private boolean connect(MeltedTelnetClient melted){
-        boolean connected = melted.connect("localhost", 5250, 320);
+        boolean connected = melted.connect("localhost", 5250);
 
         if(connected == false){
             System.out.println("Fail connecting to melted server!!!");

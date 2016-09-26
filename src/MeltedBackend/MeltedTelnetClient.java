@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class MeltedTelnetClient implements MeltedClient {
     private static final int START_DELAY_MS = 100;      // Delay needed to start using melted after it's execution.
     private static final int SLEEP_TIME_MS = 10;        // Sleep time in ms while reading telnet's response.
-    private static final int SLEEPS_BEFORE_TIMEOUT = 2; // Factor of SLEEP_TIME_MS to determine a command timeout.
+    private static final int DEFAULT_CMD_TIMEOUT = 10000;// Command timeout in ms
 
     private int port;
     private String hostname;
@@ -70,7 +70,7 @@ public class MeltedTelnetClient implements MeltedClient {
      */
     public boolean connect(String hostname, int port){
         // Default timeout is calculated with SLEE_TIME_MS into account
-        return connect(hostname, port, SLEEPS_BEFORE_TIMEOUT*SLEEP_TIME_MS);
+        return connect(hostname, port, DEFAULT_CMD_TIMEOUT);
     }
     
     public void disconnect(){
@@ -139,35 +139,27 @@ public class MeltedTelnetClient implements MeltedClient {
      */
     public synchronized String send(String cmd, long timeout){
         response.resetResponse();   // Clean response
-        response.setActive(false);  // Reset active flag
         writer.println(cmd);        // Send telnet command
+        System.out.println("-> "+cmd);
 
         timeout = TimeUnit.NANOSECONDS.convert(timeout, TimeUnit.MILLISECONDS); // Convert to nanoseconds
 
         // Grab response...
         boolean keepListening = true;
-        long lastActiveTime = System.nanoTime();
-        long inactiveTime;
+        long inactiveTime, lastActiveTime = System.nanoTime();
         
-        while(keepListening){            
-            if(response.isActive()){    // If the response object is still being written to
-                response.setActive(false);                
-                lastActiveTime = System.nanoTime();                
-            }
-            else {
-                inactiveTime = System.nanoTime() - lastActiveTime;
-                
-                if(inactiveTime >= timeout){
-                    keepListening = false;
-                }
+        while(!response.completed()){
+            inactiveTime = System.nanoTime() - lastActiveTime;
+            
+            if(inactiveTime >= timeout){
+                System.out.println("Timed out "+inactiveTime+", "+timeout);
+                return "-1";    // Timedout
             }
             
-            if(keepListening){
-                try {
-                    Thread.sleep(SLEEP_TIME_MS);
-                } catch (InterruptedException ex) { //TODO
-                    ex.printStackTrace();
-                }
+            try {
+                Thread.sleep(SLEEP_TIME_MS);
+            } catch (InterruptedException ex) { //TODO
+                ex.printStackTrace();
             }
         }
         

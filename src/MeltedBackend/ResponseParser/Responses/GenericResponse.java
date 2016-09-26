@@ -27,7 +27,8 @@ public class GenericResponse {
      * @return true if the command was OK, false otherwise.
      */
     public boolean cmdOk(){
-        System.out.println("comparar con "+status.split(" ")[1]);
-        return status.split(" ")[1].equals("OK");
+        if(!status.equals("-1"))
+            return status.split(" ")[1].equals("OK");
+        return false;
     }
 }

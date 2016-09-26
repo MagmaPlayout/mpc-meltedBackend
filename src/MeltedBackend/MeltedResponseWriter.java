@@ -9,26 +9,46 @@ package MeltedBackend;
  */
 public class MeltedResponseWriter {
     private String response = "";
-    private boolean active = false; // If this response object is being written to
+    private boolean active = false;         // If this response object is being written to with a single command's response
+    private boolean finished = false;       // If the response is completely written
+    private boolean isMultiLine = false;    // True = multiline response; False = single line response
     
-    public boolean isActive(){
-        return active;
+    public boolean completed(){
+        return finished;
     }
     
     public String getResponse(){
         return response;
     }
-    
-    public void setActive(boolean active){
-        this.active = active;
-    }
 
     public synchronized void appendLine(String line){
-        this.active = true;
+        if(!active){    // First line to be appended
+            active = true;            
+            int statusCode = Integer.parseInt(line.split(" ")[0]);
+            
+            if(statusCode == 200 || statusCode > 299){
+                finished = true;
+            }
+            else if(statusCode == 202){
+                isMultiLine = false;
+            }
+            else if(statusCode == 201) {
+                isMultiLine = true;
+            }
+            else{
+               finished = true; // Message without status  
+            }
+        }
+        else if(!isMultiLine || line.equals("\n")){
+            finished = true;
+        }
+        
         response = response.concat(line+"\n");        
     }
     
     public void resetResponse(){
         response = "";
+        finished = false;
+        active = false;
     }
 }
