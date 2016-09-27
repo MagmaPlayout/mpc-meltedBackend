@@ -1,7 +1,7 @@
 package MeltedBackend.Commands;
 
-import MeltedBackend.Common.MeltedCommandException;
 import MeltedBackend.Common.MeltedClient;
+import MeltedBackend.Common.MeltedCommandException;
 import MeltedBackend.ResponseParser.Parsers.MeltedParser;
 import MeltedBackend.ResponseParser.Responses.GenericResponse;
 
@@ -11,9 +11,9 @@ import MeltedBackend.ResponseParser.Responses.GenericResponse;
  * @author rombus
  */
 public class MeltedCmd {
-    private final MeltedClient melted;
-    private final MeltedParser parser;
-    private String command;
+    protected final MeltedClient melted;
+    protected final MeltedParser parser;
+    protected String command;
 
     public MeltedCmd(boolean isGlobal, String cmd, String unit, String args, MeltedClient melted, MeltedParser parser){
         this.parser = parser;
