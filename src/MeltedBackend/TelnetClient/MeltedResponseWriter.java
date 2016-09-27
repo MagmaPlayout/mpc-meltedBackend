@@ -39,11 +39,11 @@ public class MeltedResponseWriter {
                finished = true; // Message without status  
             }
         }
-        else if(!isMultiLine || line.equals("\n")){
+        else if(!isMultiLine || line.equals("")){ // Multiline responses are finished with a blank line
             finished = true;
         }
         
-        response = response.concat(line+"\n");        
+        response = response.concat(line+"\n");
     }
     
     public void resetResponse(){

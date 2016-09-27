@@ -47,9 +47,35 @@ public class MeltedCmdFactory {
     public MeltedCmd getNewPauseCmd(String unit){
         return new MeltedCmd(false, "PAUSE", unit, "", melted, simpleParser);
     }
+
+    public MeltedCmd getNewCleanCmd(String unit){
+        return new MeltedCmd(false, "CLEAN", unit, "", melted, simpleParser);
+    }
+
+    public MeltedCmd getNewRemoveCmd(String unit){
+        return new MeltedCmd(false, "REMOVE", unit, "", melted, simpleParser);
+    }
+
+    public ApndCmd getNewApndCmd(String unit, String file){
+        return new ApndCmd(false, "APND", unit, file, melted, simpleParser);
+    }
+
+    /**
+     * Allows creating an ApndCmd without arguments.
+     * Before calling exec() on this object be sure to set it's argument with setFileName(file) method,
+     * otherwise it will 404.
+     *
+     * @param unit
+     * @return
+     */
+    public ApndCmd getNewApndCmd(String unit){
+        return new ApndCmd(false, "APND", unit, "", melted, simpleParser);
+    }
+
     
     // Global Commands ---------------------------------------------------------
     public MeltedCmd getNewClsCmd(String path){
-        return new MeltedCmd(true, "CLS", "", path, melted, clsParser);
+        String quoted = "\"".concat(path).concat("\"");
+        return new MeltedCmd(true, "CLS", "", quoted, melted, clsParser);
     }
 }

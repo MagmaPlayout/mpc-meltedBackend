@@ -10,9 +10,9 @@ import java.util.ArrayList;
  * @author rombus
  */
 public class GenericResponse {
-    public String status;           // Status string
-    public String[] singleData;     // Array of data for commands with one line responses (aside from status line)
-    public ArrayList<String[]> data;// ArrayList of data for commands with multi line responses (aside from status line)
+    protected String status;           // Status string
+    protected String[] singleData;     // Array of data for commands with one line responses (aside from status line)
+    protected ArrayList<String[]> data;// ArrayList of data for commands with multi line responses (aside from status line)
 
     public GenericResponse setData(String status, String[] singleData, ArrayList<String[]> data){
         this.status = status;
@@ -35,5 +35,9 @@ public class GenericResponse {
         catch(Exception e){
             throw new MeltedCommandException("`GenericResponse` - Cannot get status data.");
         }
+    }
+
+    public String getStatus(){
+        return status;
     }
 }
