@@ -1,6 +1,6 @@
-package MeltedBackend.ResponseParser.Responses;
+package meltedBackend.responseParser.responses;
 
-import MeltedBackend.Common.MeltedCommandException;
+import meltedBackend.common.MeltedCommandException;
 import java.util.ArrayList;
 
 /**
@@ -26,7 +26,7 @@ public class GenericResponse {
      * Simlpe way of checking if the command was successful.
      *
      * @return true if the command was OK, false otherwise.
-     * @throws MeltedBackend.Common.MeltedCommandException
+     * @throws meltedBackend.common.MeltedCommandException
      */
     public boolean cmdOk() throws MeltedCommandException{
         try{

@@ -1,14 +1,14 @@
-package MeltedBackend.Commands;
+package meltedBackend.commands;
 
-import MeltedBackend.Common.MeltedClient;
-import MeltedBackend.ResponseParser.Parsers.MeltedParser;
-import MeltedBackend.ResponseParser.Parsers.MultiLineParser;
-import MeltedBackend.ResponseParser.Parsers.SingleLineParser;
-import MeltedBackend.ResponseParser.Parsers.StatusParser;
-import MeltedBackend.ResponseParser.Responses.ClsResponse;
-import MeltedBackend.ResponseParser.Responses.GenericResponse;
-import MeltedBackend.ResponseParser.Responses.ListResponse;
-import MeltedBackend.ResponseParser.Responses.UstaResponse;
+import meltedBackend.common.MeltedClient;
+import meltedBackend.responseParser.parsers.MeltedParser;
+import meltedBackend.responseParser.parsers.MultiLineParser;
+import meltedBackend.responseParser.parsers.SingleLineParser;
+import meltedBackend.responseParser.parsers.StatusParser;
+import meltedBackend.responseParser.responses.ClsResponse;
+import meltedBackend.responseParser.responses.GenericResponse;
+import meltedBackend.responseParser.responses.ListResponse;
+import meltedBackend.responseParser.responses.UstaResponse;
 
 /**
  * Factory for melted commands.

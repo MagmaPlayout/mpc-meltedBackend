@@ -1,7 +1,7 @@
-package MeltedBackend.Commands;
+package meltedBackend.commands;
 
-import MeltedBackend.Common.MeltedClient;
-import MeltedBackend.ResponseParser.Parsers.MeltedParser;
+import meltedBackend.common.MeltedClient;
+import meltedBackend.responseParser.parsers.MeltedParser;
 
 /**
  * This subclass of MeltedCmd allows ApndCmd objects to be reused by enabling the modification of it's arguments.

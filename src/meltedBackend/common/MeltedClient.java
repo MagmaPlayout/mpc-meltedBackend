@@ -1,6 +1,6 @@
-package MeltedBackend.Common;
+package meltedBackend.common;
 
-import MeltedBackend.Common.MeltedCommandException;
+import meltedBackend.common.MeltedCommandException;
 
 /**
  * 

@@ -1,4 +1,4 @@
-package MeltedBackend.TelnetClient;
+package meltedBackend.telnetClient;
 
 /**
  * Encapsulates a signle melted command's response.

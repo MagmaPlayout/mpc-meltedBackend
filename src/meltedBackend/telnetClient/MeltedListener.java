@@ -1,4 +1,4 @@
-package MeltedBackend.TelnetClient;
+package meltedBackend.telnetClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package MeltedBackend.ResponseParser.Responses;
+package meltedBackend.responseParser.responses;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package MeltedBackend.ResponseParser.Responses;
+package meltedBackend.responseParser.responses;
 
-import MeltedBackend.Common.MeltedCommandException;
+import meltedBackend.common.MeltedCommandException;
 
 /**
  * Response class for storing Melted's "LIST {UNIT}" command responses.

@@ -1,4 +1,4 @@
-package MeltedBackend.Common;
+package meltedBackend.common;
 
 /**
  * Checked exception to be thrown by the exec() or parse() of the command and it's response

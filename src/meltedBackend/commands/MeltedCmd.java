@@ -1,9 +1,9 @@
-package MeltedBackend.Commands;
+package meltedBackend.commands;
 
-import MeltedBackend.Common.MeltedClient;
-import MeltedBackend.Common.MeltedCommandException;
-import MeltedBackend.ResponseParser.Parsers.MeltedParser;
-import MeltedBackend.ResponseParser.Responses.GenericResponse;
+import meltedBackend.common.MeltedClient;
+import meltedBackend.common.MeltedCommandException;
+import meltedBackend.responseParser.parsers.MeltedParser;
+import meltedBackend.responseParser.responses.GenericResponse;
 
 /**
  * Represents a melted command as an object.

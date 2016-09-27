@@ -1,6 +1,6 @@
-package MeltedBackend.ResponseParser.Parsers;
+package meltedBackend.responseParser.parsers;
 
-import MeltedBackend.ResponseParser.Responses.GenericResponse;
+import meltedBackend.responseParser.responses.GenericResponse;
 
 /**
  * Parser for melted commands with one line response (aside from status line)

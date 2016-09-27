@@ -1,7 +1,7 @@
-package MeltedBackend.TelnetClient;
+package meltedBackend.telnetClient;
 
-import MeltedBackend.Common.MeltedCommandException;
-import MeltedBackend.Common.MeltedClient;
+import meltedBackend.common.MeltedCommandException;
+import meltedBackend.common.MeltedClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -138,7 +138,7 @@ public class MeltedTelnetClient implements MeltedClient {
      * @param cmd melted command
      * @param timeout command timeout in ms
      * @return melted response
-     * @throws MeltedBackend.Common.MeltedCommandException     
+     * @throws meltedBackend.common.MeltedCommandException     
      */
     @Override
     public synchronized String send(String cmd, long timeout) throws MeltedCommandException{
@@ -172,7 +172,7 @@ public class MeltedTelnetClient implements MeltedClient {
      *
      * @param cmd melted command
      * @return melted response
-     * @throws MeltedBackend.Common.MeltedCommandException     
+     * @throws meltedBackend.common.MeltedCommandException     
      */
     @Override
     public String send(String cmd) throws MeltedCommandException{
