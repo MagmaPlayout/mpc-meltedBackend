@@ -8,13 +8,13 @@ import MeltedBackend.ResponseParser.Parsers.MeltedParser;
  * 
  * @author rombus
  */
-public class ApndCmd extends MeltedCmd {
+public class MeltedCmdApnd extends MeltedCmd {
 
-    public ApndCmd(boolean isGlobal, String cmd, String unit, String args, MeltedClient melted, MeltedParser parser) {
+    public MeltedCmdApnd(boolean isGlobal, String cmd, String unit, String args, MeltedClient melted, MeltedParser parser) {
         super(isGlobal, cmd, unit, args, melted, parser);
     }
 
-    public ApndCmd setFileName(String file){
+    public MeltedCmdApnd setFileName(String file){
         String prev = command;
         command = command.split(" ")[0] + " " + command.split(" ")[1] + " " + file;
         

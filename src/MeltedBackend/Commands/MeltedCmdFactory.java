@@ -56,8 +56,8 @@ public class MeltedCmdFactory {
         return new MeltedCmd(false, "REMOVE", unit, "", melted, simpleParser);
     }
 
-    public ApndCmd getNewApndCmd(String unit, String file){
-        return new ApndCmd(false, "APND", unit, file, melted, simpleParser);
+    public MeltedCmdApnd getNewApndCmd(String unit, String file){
+        return new MeltedCmdApnd(false, "APND", unit, file, melted, simpleParser);
     }
 
     /**
@@ -68,8 +68,8 @@ public class MeltedCmdFactory {
      * @param unit
      * @return
      */
-    public ApndCmd getNewApndCmd(String unit){
-        return new ApndCmd(false, "APND", unit, "", melted, simpleParser);
+    public MeltedCmdApnd getNewApndCmd(String unit){
+        return new MeltedCmdApnd(false, "APND", unit, "", melted, simpleParser);
     }
 
     
