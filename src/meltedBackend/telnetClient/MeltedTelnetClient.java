@@ -1,13 +1,15 @@
 package meltedBackend.telnetClient;
 
-import meltedBackend.common.MeltedCommandException;
-import meltedBackend.common.MeltedClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import meltedBackend.common.MeltedClient;
+import meltedBackend.common.MeltedCommandException;
 
 /** 
  * Telnet client that connects to the Melted server.
@@ -27,6 +29,7 @@ public class MeltedTelnetClient implements MeltedClient {
     private BufferedReader reader;    
     private MeltedResponseWriter response;
     private Thread responseListener;
+    private Logger logger;
 
     /**
      * Connects to a Melted Telnet server.
@@ -34,12 +37,14 @@ public class MeltedTelnetClient implements MeltedClient {
      * @param hostname melted server hostname
      * @param port  melted server port
      * @param timeout default command timeout in ms
+     * @param logger application logger
      * @return true if connection succedeed, false otherwise
      */
-    public boolean connect(String hostname, int port, long timeout){
+    public boolean connect(String hostname, int port, long timeout, Logger logger){
         this.hostname = hostname;
         this.port = port;
         this.timeout = timeout;
+        this.logger = logger;
 
         try {
             socket = new Socket(hostname, port);
@@ -50,7 +55,7 @@ public class MeltedTelnetClient implements MeltedClient {
         }
         
         response = new MeltedResponseWriter();
-        responseListener = new Thread(new MeltedListener(response, reader));
+        responseListener = new Thread(new MeltedListener(response, reader, logger));
         
         responseListener.start();
 
@@ -68,11 +73,12 @@ public class MeltedTelnetClient implements MeltedClient {
      *
      * @param hostname melted server hostname
      * @param port  melted server port
+     * @param logger application logger
      * @return true if connection succedeed, false otherwise
      */
-    public boolean connect(String hostname, int port){
-        // Default timeout is calculated with SLEE_TIME_MS into account
-        return connect(hostname, port, DEFAULT_CMD_TIMEOUT);
+    public boolean connect(String hostname, int port, Logger logger){
+        this.logger = logger;
+        return connect(hostname, port, DEFAULT_CMD_TIMEOUT, logger);
     }
     
     public void disconnect(){
@@ -101,16 +107,16 @@ public class MeltedTelnetClient implements MeltedClient {
 
         while(keepTrying){
             tryNumber++;
-            System.out.println("Reconnecting... try #"+tryNumber);
+            logger.log(Level.INFO, "Reconnecting... try #"+tryNumber);
 
-            if(connect(hostname, port) == true){
-                System.out.println("Connection succeeded, resuming operations.");
+            if(connect(hostname, port, logger) == true){
+                logger.log(Level.INFO, "Connection succeeded, resuming operations.");
                 connected = true;
                 break;
             }
 
             if(cantTries != 0){
-                System.out.println("Reconnection failed, waiting "+msBetweenTries+"ms for next try, "+(cantTries-tryNumber)+" remaining.");
+                logger.log(Level.INFO, "Reconnection failed, waiting "+msBetweenTries+"ms for next try, "+(cantTries-tryNumber)+" remaining.");
 
                 if(tryNumber >= cantTries){
                     keepTrying = false;
@@ -118,7 +124,7 @@ public class MeltedTelnetClient implements MeltedClient {
                 }
             }
             else {
-                System.out.println("Reconnection failed, waiting "+msBetweenTries+"ms for next try.");
+                logger.log(Level.INFO, "Reconnection failed, waiting "+msBetweenTries+"ms for next try.");
             }
 
             try {   Thread.sleep(msBetweenTries);
