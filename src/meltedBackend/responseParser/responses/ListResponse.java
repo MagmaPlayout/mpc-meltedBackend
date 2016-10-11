@@ -10,6 +10,7 @@ import meltedBackend.common.MeltedCommandException;
  */
 public class ListResponse extends GenericResponse{
     public static final short PLAYLIST_MODIFICATIONS = 0;
+    public static final short PLAYLIST_CLIP_ID = 0;
     public static final short CLIP_PATH = 1;
 
     public String getListModifications() throws MeltedCommandException{
@@ -21,6 +22,12 @@ public class ListResponse extends GenericResponse{
         }
     }
 
+    /**
+     * Returns a String array with the path's of the playlist clips.
+     * 
+     * @return
+     * @throws MeltedCommandException
+     */
     public String[] getMeltedPlaylist() throws MeltedCommandException{
         if(this.data.isEmpty()){
             throw new MeltedCommandException("`ListResponse` - Cannot get data at index "+CLIP_PATH+".");
@@ -36,5 +43,21 @@ public class ListResponse extends GenericResponse{
         }
 
         return paths;
+    }
+
+    /**
+     * Returns the amount of clips loaded in Melted's playlist.
+     * 
+     * @return
+     * @throws MeltedCommandException
+     */
+    public int getPlaylistLength() throws MeltedCommandException{
+        if(this.data.isEmpty()){
+            throw new MeltedCommandException("`ListResponse` - Cannot get data at index "+PLAYLIST_CLIP_ID+".");
+        }
+
+        int i=0;
+
+        return Integer.parseInt(data.get(data.size()-1)[PLAYLIST_CLIP_ID]);
     }
 }

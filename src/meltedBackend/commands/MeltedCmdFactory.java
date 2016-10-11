@@ -60,6 +60,11 @@ public class MeltedCmdFactory {
         return new MeltedCmdApnd(false, "APND", unit, file, melted, simpleParser);
     }
 
+    // TODO create a class of GotoCmd for enabling pooling
+    public MeltedCmd getNewGotoCmd(String unit, int clipId, int framePosition){
+        return new MeltedCmd(false, "GOTO", unit, clipId+" "+framePosition, melted, simpleParser);
+    }
+
     /**
      * Allows creating an ApndCmd without arguments.
      * Before calling exec() on this object be sure to set it's argument with setFileName(file) method,

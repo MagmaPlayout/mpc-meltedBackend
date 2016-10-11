@@ -128,9 +128,10 @@ public class MeltedTelnetClient implements MeltedClient {
             }
 
             try {   Thread.sleep(msBetweenTries);
-            } catch (InterruptedException ex) { //TODO
+            } catch (InterruptedException ex) {
                 keepTrying = false;
-                ex.printStackTrace();
+                connected = false;
+                logger.log(Level.INFO, "Killing MeltedTelnetClient thread.");
             }
         }
         
