@@ -58,6 +58,11 @@ public class ListResponse extends GenericResponse{
 
         int i=0;
 
+        // If the response is less than 5 lines, then it doesn't have any clips loaded.
+        if(data.size() < 5){
+            return 0;
+        }
+
         return Integer.parseInt(data.get(data.size()-1)[PLAYLIST_CLIP_ID]);
     }
 }
