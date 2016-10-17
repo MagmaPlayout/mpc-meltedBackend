@@ -59,10 +59,9 @@ public class MeltedCmdFactory {
     public MeltedCmdApnd getNewApndCmd(String unit, String file){
         return new MeltedCmdApnd(false, "APND", unit, file, melted, simpleParser);
     }
-
-    // TODO create a class of GotoCmd for enabling pooling
-    public MeltedCmd getNewGotoCmd(String unit, int clipId, int framePosition){
-        return new MeltedCmd(false, "GOTO", unit, clipId+" "+framePosition, melted, simpleParser);
+    
+    public MeltedCmd getNewGotoCmd(String unit, int framePosition, int clipId){
+        return new MeltedCmd(false, "GOTO", unit, framePosition+" "+clipId, melted, simpleParser);
     }
 
     /**
