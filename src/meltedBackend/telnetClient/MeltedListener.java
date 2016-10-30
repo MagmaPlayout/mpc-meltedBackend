@@ -28,7 +28,14 @@ public class MeltedListener implements Runnable {
         while(keepRunning){
             try {
                 String line = reader.readLine(); // Blocking method
-                response.appendLine(line);
+                
+                if(line != null){
+                    response.appendLine(line);
+                }
+                else {
+                    logger.log(Level.WARNING, "Melted backend - Error reading Melted output. Is it running?");
+                }
+                
             } catch (IOException e) {
                 keepRunning = false;
                 logger.log(Level.WARNING, "Kiling TelnetListener Thread.");

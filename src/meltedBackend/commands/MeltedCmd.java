@@ -32,4 +32,9 @@ public class MeltedCmd {
     public GenericResponse exec() throws MeltedCommandException{
         return parser.parse(melted.send(command));
     }
+
+    @Override
+    public String toString(){
+        return command;
+    }
 }
