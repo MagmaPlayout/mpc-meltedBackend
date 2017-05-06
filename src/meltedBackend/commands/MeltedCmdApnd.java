@@ -15,7 +15,6 @@ public class MeltedCmdApnd extends MeltedCmd {
     }
 
     public MeltedCmdApnd setFileName(String file){
-        String prev = command;
         command = command.split(" ")[0] + " " + command.split(" ")[1] + " " + file;
         
         return this;

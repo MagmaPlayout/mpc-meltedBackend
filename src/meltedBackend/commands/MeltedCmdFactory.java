@@ -64,6 +64,10 @@ public class MeltedCmdFactory {
         return new MeltedCmd(false, "GOTO", unit, framePosition+" "+clipId, melted, simpleParser);
     }
 
+    public MeltedCmd getNewWipeCmd(String unit){
+        return new MeltedCmd(false, "WIPE", unit, "", melted, simpleParser);
+    }
+
     /**
      * Allows creating an ApndCmd without arguments.
      * Before calling exec() on this object be sure to set it's argument with setFileName(file) method,
