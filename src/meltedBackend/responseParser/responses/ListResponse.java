@@ -38,7 +38,7 @@ public class ListResponse extends GenericResponse{
 
         for(String[] line: this.data){
             if(line.length > 1){ // Ignores the PLAYLIST_MODIFICATIONS
-                paths[i++] = line[CLIP_PATH];
+                paths[i++] = line[CLIP_PATH].trim();
             }
         }
 
