@@ -56,6 +56,10 @@ public class MeltedCmdFactory {
         return new MeltedCmd(false, "REMOVE", unit, "", melted, simpleParser);
     }
 
+    public MeltedCmd getNewRemoveCmd(String unit, int playlistId){
+        return new MeltedCmd(false, "REMOVE", unit, String.valueOf(playlistId), melted, simpleParser);
+    }
+
     public MeltedCmdApnd getNewApndCmd(String unit, String file){
         return new MeltedCmdApnd(false, "APND", unit, file, melted, simpleParser);
     }
@@ -66,6 +70,10 @@ public class MeltedCmdFactory {
 
     public MeltedCmd getNewWipeCmd(String unit){
         return new MeltedCmd(false, "WIPE", unit, "", melted, simpleParser);
+    }
+
+    public MeltedCmd getNewInsertCmd(String unit, String clipPath, int playlistIndex){
+        return new MeltedCmd(false, "INSERT", unit, clipPath+" "+String.valueOf(playlistIndex), melted, simpleParser);
     }
 
     /**
