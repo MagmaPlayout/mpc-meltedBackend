@@ -46,12 +46,12 @@ public class ListResponse extends GenericResponse{
     }
 
     /**
-     * Returns the amount of clips loaded in Melted's playlist.
+     * Returns the clip index of the last loaded clip in Melted's playlist.
      * 
      * @return
      * @throws MeltedCommandException
      */
-    public int getPlaylistLength() throws MeltedCommandException{
+    public int getLastPlClipIndex() throws MeltedCommandException{
         if(this.data.isEmpty()){
             throw new MeltedCommandException("`ListResponse` - Cannot get data at index "+PLAYLIST_CLIP_ID+".");
         }
