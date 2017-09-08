@@ -14,6 +14,7 @@ public class UstaResponse extends GenericResponse{
     public static final short CUR_CLIP_INDEX = 16;
     public static final short CUR_CLIP_LEN = 8;
     public static final short CUR_CLIP_FRAME = 3;
+    public static final short CUR_CLIP_FPS = 5;
     
     public int getPlayingClipIndex() throws MeltedCommandException{
         try{
@@ -39,6 +40,16 @@ public class UstaResponse extends GenericResponse{
         }
         catch(NullPointerException e) {
             throw new MeltedCommandException("`UstaResponse` - Cannot get data at index "+CUR_CLIP_FRAME+".");
+        }
+    }
+
+    public float getPlayingClipFPS() throws MeltedCommandException{
+        try{
+            String fpsValue = this.singleData[CUR_CLIP_FPS].replace(",", ".");
+            return Float.parseFloat(fpsValue);
+        }
+        catch(NullPointerException e) {
+            throw new MeltedCommandException("`UstaResponse` - Cannot get data at index "+CUR_CLIP_FPS+".");
         }
     }
 
