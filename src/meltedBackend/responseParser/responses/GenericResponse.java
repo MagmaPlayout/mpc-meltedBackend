@@ -1,7 +1,7 @@
 package meltedBackend.responseParser.responses;
 
-import meltedBackend.common.MeltedCommandException;
 import java.util.ArrayList;
+import meltedBackend.common.MeltedCommandException;
 
 /**
  * Generic Response class for storing Melted command's responses.
@@ -13,6 +13,17 @@ public class GenericResponse {
     protected String status;           // Status string
     protected String[] singleData;     // Array of data for commands with one line responses (aside from status line)
     protected ArrayList<String[]> data;// ArrayList of data for commands with multi line responses (aside from status line)
+
+    public GenericResponse(){}
+    
+    public <T extends GenericResponse> T createCopy(Class<T> type) throws InstantiationException, IllegalAccessException{
+        T gr = type.newInstance();
+        gr.status = status;
+        gr.singleData = singleData;
+        gr.data = data;
+
+        return gr;
+    }
 
     public GenericResponse setData(String status, String[] singleData, ArrayList<String[]> data){
         this.status = status;
