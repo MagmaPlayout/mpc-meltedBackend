@@ -10,6 +10,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import meltedBackend.common.MeltedClient;
 import meltedBackend.common.MeltedCommandException;
+import meltedBackend.responseParser.parsers.SingleLineStatusParser;
+import meltedBackend.responseParser.responses.UstaResponse;
+import meltedBackend.statuscmd.StatusCmdProcessor;
 
 /** 
  * Telnet client that connects to the Melted server.
@@ -30,6 +33,7 @@ public class MeltedTelnetClient implements MeltedClient {
     private MeltedResponseWriter response;
     private Thread responseListener;
     private Logger logger;
+    private boolean running;
 
     /**
      * Connects to a Melted Telnet server.
@@ -55,7 +59,7 @@ public class MeltedTelnetClient implements MeltedClient {
         }
         
         response = new MeltedResponseWriter();
-        responseListener = new Thread(new MeltedListener(response, reader, logger));
+        responseListener = new Thread(new MeltedListener(this, response, reader, logger));
         
         responseListener.start();
 
@@ -83,6 +87,7 @@ public class MeltedTelnetClient implements MeltedClient {
     
     public void disconnect(){
         try {
+            running = false;
             writer.close();
             reader.close();
             responseListener.interrupt();
@@ -100,7 +105,6 @@ public class MeltedTelnetClient implements MeltedClient {
      * @return true if connected, false otherwise
      */
     public boolean reconnect(int cantTries, long msBetweenTries){
-        //TODO: reemplazar los sout por un logger        
         boolean connected = false;
         boolean keepTrying = true;
         int tryNumber = 0;
@@ -129,9 +133,9 @@ public class MeltedTelnetClient implements MeltedClient {
 
             try {   Thread.sleep(msBetweenTries);
             } catch (InterruptedException ex) {
-                keepTrying = false;
-                connected = false;
-                logger.log(Level.INFO, "Killing MeltedTelnetClient thread.");
+//                keepTrying = false;
+//                connected = false;
+//                logger.log(Level.INFO, "Killing MeltedTelnetClient thread.");
             }
         }
         
@@ -184,6 +188,32 @@ public class MeltedTelnetClient implements MeltedClient {
     @Override
     public String send(String cmd) throws MeltedCommandException{
         return send(cmd,timeout);
+    }
+    
+    /**
+     * Listens to Melted's STATUS command.
+     * 
+     * This is a blocking method, that's why you can't use send("STATUS");
+     */
+    @Override
+    public void listenStatus(StatusCmdProcessor sp) throws MeltedCommandException {
+        try {
+            writer.println("STATUS"); // Send telnet command
+            running=true;
+
+            SingleLineStatusParser parser = new SingleLineStatusParser(new UstaResponse());
+            UstaResponse previousFrame = null;
+            while(running){               
+                String line = reader.readLine(); // Blocking method
+                if(line != null){
+                    UstaResponse currentFrame = (UstaResponse) parser.parse(line);
+                    sp.eventHandler(currentFrame, previousFrame, line);
+                    previousFrame = currentFrame.createCopy(UstaResponse.class);
+                }
+            }
+        } catch (IOException | InstantiationException | IllegalAccessException ex) {
+            throw new MeltedCommandException(ex.getMessage());
+        }
     }
 
     public Thread getListenerThread(){

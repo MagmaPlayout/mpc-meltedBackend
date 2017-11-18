@@ -1,6 +1,6 @@
 package meltedBackend.common;
 
-import meltedBackend.common.MeltedCommandException;
+import meltedBackend.statuscmd.StatusCmdProcessor;
 
 /**
  * 
@@ -9,4 +9,5 @@ import meltedBackend.common.MeltedCommandException;
 public interface MeltedClient {
     String send(String cmd, long timeout) throws MeltedCommandException;
     String send(String cmd) throws MeltedCommandException;
+    void listenStatus(StatusCmdProcessor sp) throws MeltedCommandException;
 }
